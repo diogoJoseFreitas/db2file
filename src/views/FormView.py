@@ -1,5 +1,6 @@
 from views.templates.guiInterfaceTemplate import guiInterfaceTemplate as git
-from datetime import datetime, timedelta
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 class FormView(git):
     def __init__(self):
@@ -7,7 +8,7 @@ class FormView(git):
 
         self.label("Data Início:", position=(0, 0))
         self.start_date = self.dateInput(position=(0, 1))
-        self.start_date.set_date((datetime.today - timedelta(weeks=4)))
+        self.start_date.set_date((datetime.today() - relativedelta(months=1)))
 
         self.label("Data Fim:", position=(0, 2))
         self.end_date = self.dateInput(position=(0, 3))

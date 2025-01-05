@@ -6,7 +6,7 @@ from tkcalendar import DateEntry
 
 class ScreenModel(tk.Tk):
     STYLE_DEFAULTS = {
-        "width": 15,
+        "width": 25,
         }
     GRID_DEFAULTS = {
         "position": (0, 0),
@@ -14,7 +14,7 @@ class ScreenModel(tk.Tk):
         "pady": 5,
         "columnspan": 1,
         "rowspan": 1,
-        "sticky": "w",
+        "sticky": "e",
         }
 
     def __init__(self, title="", window_size="300x200", **kw):

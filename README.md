@@ -6,7 +6,7 @@ The idea is to implement a python based database table exporter to different fil
 
 ## Goals to achieve
 - [ ] Database connection
-- [ ] Date interval filtering
+- [x] Date interval filtering
 - [ ] Export file to FTP or local
 - [x] interface to get inputs (easily editable with guiInterfaceTemplate implemented)
 - [ ] executable file

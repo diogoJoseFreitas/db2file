@@ -5,6 +5,19 @@ from tkcalendar import DateEntry
 
 
 class ScreenModel(tk.Tk):
+    POSITION_DEFAULTS = {
+        "width": 25,
+        }
+    GRID_DEFAULTS = {
+        "padx": 5,
+        "pady": 5,
+        "columnspan": 1,
+        "rowspan": 1,
+        "sticky": "w",
+        }
+    DEFAULTS = {
+        "date_pattern": "dd/mm/yyyy"
+    }
     PADX = 5
     PADY = 5
     WIDTH = 25
@@ -17,8 +30,19 @@ class ScreenModel(tk.Tk):
     def show(self):
         self.mainloop()
 
+    def _update_params(self, defaults, custom_params) -> dict[str, any]:
+        result = defaults.copy()
+        result.update(custom_params)
+        return result
+
+    def _grid(self, widget:tk.Entry, **kwargs):
+        kwargs = self._update_params(self.GRID_DEFAULTS, kwargs)
+        widget.grid(kwargs)
+        return widget
+
     def label(self, text = "", positon=(0, 0), width=None, padx=PADX, pady= PADY, colspan=1, rowspan = 1, sticky="w", **kwargs):
-        tk.Label(master=self, text=text, width=width, **kwargs).grid(row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky=sticky)
+        wdgt = tk.Label(master=self, text=text, width=width, **kwargs)
+        self._grid(wdgt, row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky=sticky)
     
     def textInput(self, positon=(0, 0), width=WIDTH, padx=PADX, pady= PADY, colspan=1, rowspan = 1, **kwargs) -> tk.Entry:
         inp = tk.Entry(self, width=width, **kwargs)

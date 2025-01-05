@@ -33,8 +33,9 @@ class ScreenModel(tk.Tk):
     def button(self, text = "", command = None, positon=(0, 0), width=WIDTH, padx=PADX, pady= PADY, colspan=1, rowspan = 1, **kwargs):
         tk.Button(self, text=text, command=command, width=width, **kwargs).grid(row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky="w")
     
-    def combobox(self, values=[], positon=(0, 0), width=None, padx=PADX, pady= PADY, colspan=1, rowspan = 1, **kwargs):
-        inp = ttk.Combobox(self, values=values, width=width, **kwargs)
+    def combobox(self, values=[], positon=(0, 0), default_value=0, width=5, padx=PADX, pady= PADY, colspan=1, rowspan = 1, **kwargs):
+        inp = ttk.Combobox(self, values=values, width=width,**kwargs)
+        inp.set(values[default_value])
         inp.grid(row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky="w")
         return inp
     

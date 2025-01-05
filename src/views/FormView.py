@@ -1,4 +1,4 @@
-from models.ScreenModel import ScreenModel as sc
+from views.templates.ScreenModel import ScreenModel as sc
 
 class FormView(sc):
     def __init__(self):
@@ -18,9 +18,9 @@ class FormView(sc):
             self.alert("Erro de inserção", "A data de Início deve ser inferior a Data Final para gerar relatóro.")
         print("-="*15)
         print("Relatório atual:")
-        print("Data de Início: ", self.start_date.get_date())
-        print("Data Final: ", self.end_date.get_date())
-        print("Formato do arquivo gerado: ", self.exportTo.get())
+        print("Data de Início:", self.start_date.get_date())
+        print("Data Final:", self.end_date.get_date())
+        print("Formato do arquivo gerado:", self.exportTo.get())
         print("-="*15)
 
 if __name__ =="__main__":

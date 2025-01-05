@@ -4,17 +4,17 @@ from dateutil.relativedelta import relativedelta
 
 class FormView(git):
     def __init__(self):
-        super().__init__("Gerador de Relatório por data", "500x300")
+        super().__init__("Gerador de Relatório por data", "400x200")
 
         self.label("Data Início:", position=(0, 0))
-        self.start_date = self.dateInput(position=(0, 1))
+        self.start_date = self.dateInput(position=(0, 1), sticky="w")
         self.start_date.set_date((datetime.today() - relativedelta(months=1)))
 
         self.label("Data Fim:", position=(0, 2))
-        self.end_date = self.dateInput(position=(0, 3))
+        self.end_date = self.dateInput(position=(0, 3), sticky="w")
 
         self.label("Formato de exportação:", position=(1, 1), columnspan=2)
-        self.exportTo = self.combobox([".csv", ".json"], position=(1, 3), width=5)
+        self.exportTo = self.combobox([".csv", ".json"], position=(1, 3), width=5, sticky="w")
 
         self.button("Enviar", self.generateReport, position=(2, 1), columnspan=2, sticky="nsew")
 

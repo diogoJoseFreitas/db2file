@@ -6,7 +6,7 @@ from tkcalendar import DateEntry
 
 class guiInterfaceTemplate(tk.Tk):
     STYLE_DEFAULTS = {
-        "width": 25,
+        "width": 20,
         }
     GRID_DEFAULTS = {
         "position": (0, 0),

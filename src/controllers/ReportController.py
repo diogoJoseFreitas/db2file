@@ -1,6 +1,6 @@
 from views.FormView import FormView
 
-class FormController():
+class ReportController():
     def __init__(self):
         self.form = FormView()
     
@@ -11,6 +11,6 @@ class FormController():
         return self.form.getResult()
 
 if __name__ == "__main__":
-    controller = FormController()
+    controller = ReportController()
     controller.showForm()
     print(controller.getFormResult())

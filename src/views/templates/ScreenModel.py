@@ -5,22 +5,17 @@ from tkcalendar import DateEntry
 
 
 class ScreenModel(tk.Tk):
-    POSITION_DEFAULTS = {
-        "width": 25,
+    STYLE_DEFAULTS = {
+        "width": 15,
         }
     GRID_DEFAULTS = {
+        "position": (0, 0),
         "padx": 5,
         "pady": 5,
         "columnspan": 1,
         "rowspan": 1,
         "sticky": "w",
         }
-    DEFAULTS = {
-        "date_pattern": "dd/mm/yyyy"
-    }
-    PADX = 5
-    PADY = 5
-    WIDTH = 25
 
     def __init__(self, title="", window_size="300x200", **kw):
         super().__init__(**kw)
@@ -30,37 +25,57 @@ class ScreenModel(tk.Tk):
     def show(self):
         self.mainloop()
 
-    def _update_params(self, defaults, custom_params) -> dict[str, any]:
+    def _update_params(self, defaults:dict, custom_params:dict) -> dict[str, any]:
         result = defaults.copy()
-        result.update(custom_params)
+        for k, v in custom_params.items():
+            if k in result:
+                result[k] = v
         return result
 
     def _grid(self, widget:tk.Entry, **kwargs):
         kwargs = self._update_params(self.GRID_DEFAULTS, kwargs)
+        kwargs.update(row=kwargs["position"][0], column=kwargs["position"][1])
+        del kwargs["position"]
         widget.grid(kwargs)
         return widget
 
-    def label(self, text = "", positon=(0, 0), width=None, padx=PADX, pady= PADY, colspan=1, rowspan = 1, sticky="w", **kwargs):
-        wdgt = tk.Label(master=self, text=text, width=width, **kwargs)
-        self._grid(wdgt, row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky=sticky)
+    def label(self, text = "", **kwargs):
+        kwargs.update(width=None)
+
+        style_params = self._update_params(self.STYLE_DEFAULTS, kwargs)
+        wdgt = tk.Label(master=self, text=text, **style_params)
+        self._grid(wdgt, **kwargs)
     
-    def textInput(self, positon=(0, 0), width=WIDTH, padx=PADX, pady= PADY, colspan=1, rowspan = 1, **kwargs) -> tk.Entry:
-        inp = tk.Entry(self, width=width, **kwargs)
-        inp.grid(row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky="w")
+    def textInput(self, **kwargs) -> tk.Entry:
+
+        style_params = self._update_params(self.STYLE_DEFAULTS, kwargs)
+        inp = tk.Entry(self, **style_params)
+
+        self._grid(inp, **kwargs)
         return inp
     
-    def dateInput(self, positon=(0, 0), width=10, padx=PADX, pady= PADY, colspan=1, rowspan = 1, date_pattern="dd/mm/yyyy", **kwargs) -> DateEntry:
-        inp = DateEntry(self, width=width, date_pattern=date_pattern)
-        inp.grid(row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky="w")
+    def dateInput(self, date_pattern="dd/mm/yyyy", **kwargs) -> DateEntry:
+        kwargs.update(width=10)
+        style_params = self._update_params(self.STYLE_DEFAULTS, kwargs)
+        inp = DateEntry(self, date_pattern=date_pattern, **style_params)
+
+        self._grid(inp, **kwargs)
         return inp
     
-    def button(self, text = "", command = None, positon=(0, 0), width=WIDTH, padx=PADX, pady= PADY, colspan=1, rowspan = 1, **kwargs):
-        tk.Button(self, text=text, command=command, width=width, **kwargs).grid(row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky="w")
+    def button(self, text = "", command = None, **kwargs):
+        
+        style_params = self._update_params(self.STYLE_DEFAULTS, kwargs)
+        inp = tk.Button(self, text=text, command=command, **style_params)
+
+        self._grid(inp, **kwargs)
     
-    def combobox(self, values=[], positon=(0, 0), default_value=0, width=5, padx=PADX, pady= PADY, colspan=1, rowspan = 1, **kwargs):
-        inp = ttk.Combobox(self, values=values, width=width,**kwargs)
+    def combobox(self, values=[], default_value=0, **kwargs):
+
+        style_params = self._update_params(self.STYLE_DEFAULTS, kwargs)
+        inp = ttk.Combobox(self, values=values, **style_params)
         inp.set(values[default_value])
-        inp.grid(row=positon[0], column=positon[1], padx=padx, pady=pady, columnspan=colspan, rowspan=rowspan, sticky="w")
+        
+        self._grid(inp, **kwargs)
         return inp
     
     def alert(self, title="", message=""):

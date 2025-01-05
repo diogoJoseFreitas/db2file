@@ -1,6 +1,6 @@
-from views.templates.ScreenModel import ScreenModel as sc
+from views.templates.guiInterfaceTemplate import guiInterfaceTemplate as git
 
-class FormView(sc):
+class FormView(git):
     def __init__(self):
         super().__init__("Gerador de Relatório por data", "500x300")
         self.label("Data Início:", position=(0, 0))

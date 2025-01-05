@@ -8,7 +8,7 @@ The idea is to implement a python based database table exporter to different fil
 - [ ] Database connection
 - [ ] Date interval filtering
 - [ ] Export file to FTP or local
-- [ ] interface to get inputs
+- [x] interface to get inputs (easily editable with guiInterfaceTemplate implemented)
 - [ ] executable file
 - [ ] csv format
 - [ ] json format

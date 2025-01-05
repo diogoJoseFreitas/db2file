@@ -4,7 +4,7 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 
 
-class ScreenModel(tk.Tk):
+class guiInterfaceTemplate(tk.Tk):
     STYLE_DEFAULTS = {
         "width": 25,
         }
@@ -84,7 +84,7 @@ class ScreenModel(tk.Tk):
 
 if __name__ == "__main__":
     # Teste de execução
-    root = ScreenModel("Teste", "500x300")
+    root = guiInterfaceTemplate("Teste", "500x300")
     root.label("Nome: ", (0, 0))
     root.textInput((0, 1))
     root.label("Data de Nascimento: ", (1, 0))

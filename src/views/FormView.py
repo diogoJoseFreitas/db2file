@@ -36,7 +36,7 @@ class FormView(git):
                 "exportTo": self.exportTo.get()
             }
             
-        self.destroy()
+            self.destroy()
 
 if __name__ =="__main__":
     form = FormView()

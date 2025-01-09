@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import DateEntry
+from tkinter import filedialog
 
 
 class guiInterfaceTemplate(tk.Tk):
@@ -61,6 +62,9 @@ class guiInterfaceTemplate(tk.Tk):
 
         self._grid(inp, **kwargs)
         return inp
+
+    def fileInput(self, **kwargs) -> str:
+        return filedialog.askopenfile
     
     def button(self, text = "", command = None, **kwargs):
         

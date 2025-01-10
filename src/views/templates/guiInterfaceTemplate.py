@@ -47,11 +47,11 @@ class guiInterfaceTemplate(tk.Tk):
         wdgt = tk.Label(master=self, text=text, **style_params)
         self._grid(wdgt, **kwargs)
     
-    def textInput(self, **kwargs) -> tk.Entry:
+    def textInput(self, defalut_value='', **kwargs) -> tk.Entry:
 
         style_params = self._update_params(self.STYLE_DEFAULTS, kwargs)
         inp = tk.Entry(self, **style_params)
-
+        inp.insert(tk.END, defalut_value)
         self._grid(inp, **kwargs)
         return inp
     
@@ -64,7 +64,8 @@ class guiInterfaceTemplate(tk.Tk):
         return inp
 
     def fileInput(self, **kwargs) -> str:
-        return filedialog.askopenfile
+        self.textInput("Escolha um arquivo")
+        return filedialog.askopenfilename()
     
     def button(self, text = "", command = None, **kwargs):
         

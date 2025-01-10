@@ -63,9 +63,10 @@ class guiInterfaceTemplate(tk.Tk):
         self._grid(inp, **kwargs)
         return inp
 
-    def fileInput(self, **kwargs) -> str:
-        self.textInput("Escolha um arquivo")
-        return filedialog.askopenfilename()
+    def fileInput(self, entry:tk.Entry,**kwargs):
+        filepath = filedialog.askopenfilename()
+        entry.delete(0, 'end')
+        entry.insert(0, filepath)
     
     def button(self, text = "", command = None, **kwargs):
         

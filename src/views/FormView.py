@@ -6,8 +6,8 @@ class FormView(git):
     def __init__(self):
         super().__init__("Gerador de Relatório por data", "400x200")
         
-        self.textInput("Escolha um arquivo", position = (0,0), columnspan=2, sticky='w')
-        self.button('...', self.fileInput, width=3, sticky='e', position=(0, 1))
+        self.filepath = self.textInput("Escolha um arquivo", position = (0,0), columnspan=3, sticky='ew', width = 50, padx=(5, 0))
+        self.button('...', lambda : self.fileInput(self.filepath), width=3, sticky='w', position=(0, 3), padx=0)
 
         self.label("Data Início:", position=(1, 0))
         self.start_date = self.dateInput(position=(1, 1), sticky="w")
@@ -36,7 +36,8 @@ class FormView(git):
             self.result ={
                 "start_date": start,
                 "end_date": end,
-                "exportTo": self.exportTo.get()
+                "export_to": self.exportTo.get(),
+                "file_path":self.filepath.get(),
             }
             
             self.destroy()

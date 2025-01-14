@@ -40,13 +40,13 @@ class label(tk.Label):
 
 
 class textInput(tk.Entry):
-    def __init__(self, value = '', cnf = None, *, background = None, bd = None, bg = None, border = None, borderwidth = None, cursor = "xterm", disabledbackground = None, disabledforeground = None, exportselection = True, fg = None, font = "TkTextFont", foreground = None, highlightbackground = None, highlightcolor = None, highlightthickness = None, insertbackground = None, insertborderwidth = 0, insertofftime = 300, insertontime = 600, insertwidth = None, invalidcommand = "", invcmd = "", justify = "left", name = None, readonlybackground = None, relief = "sunken", selectbackground = None, selectborderwidth = None, selectforeground = None, show = "", state = "normal", takefocus = "", textvariable = None, validate = "none", validatecommand = "", vcmd = "", width = 5, xscrollcommand = ""):
+    def __init__(self, value = '', cnf = None, *, background = None, bd = None, bg = None, border = None, borderwidth = None, cursor = "xterm", disabledbackground = None, disabledforeground = None, exportselection = True, fg = None, font = "TkTextFont", foreground = None, highlightbackground = None, highlightcolor = None, highlightthickness = None, insertbackground = None, insertborderwidth = 0, insertofftime = 300, insertontime = 600, insertwidth = None, invalidcommand = "", invcmd = "", justify = "left", name = None, readonlybackground = None, relief = "sunken", selectbackground = None, selectborderwidth = None, selectforeground = None, show = "", state = "normal", takefocus = "", textvariable = None, validate = "none", validatecommand = "", vcmd = "", width = 30, xscrollcommand = ""):
         self.kwargs = {  # Store all provided arguments
             k: v for k, v in locals().items() if k not in ["self", 'value'] and v is not None
         }
         self.value = value
     
-    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = True, fill= 'x', side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = (0, 5),  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
+    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = False, fill= 'x', side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = (0, 5),  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
         super().__init__(master=master, **self.kwargs)
 
         args = {k: v for k, v in locals().items() if k not in ["self", 'master', 'kwargs', '__class__'] and v is not None}
@@ -64,16 +64,12 @@ class numberInput(ttk.Spinbox):
         }
         self.value = value
         
-    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = True, fill= 'x', side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = (0, 5),  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
+    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = False, fill= 'x', side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = (0, 5),  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
         super().__init__(master=master, **self.kwargs)
 
         args = {k: v for k, v in locals().items() if k not in ["self", 'master', 'kwargs', '__class__'] and v is not None}
         self.pack(**args)
         self.set(self.value)
-    
-    def setValue(self, number=0):
-        self.delete(0, tk.END)
-        self.insert(0, number)
     
 
 
@@ -94,7 +90,7 @@ class dateInput(DateEntry):
         self.pack(**args)
     
     def setFromToday(self, days_from_today=0):
-        new_date = datetime.today() + timedelta(int(days=days_from_today))
+        new_date = datetime.today() + timedelta(days=int(days_from_today))
         self.set_date(new_date)
 
 
@@ -104,7 +100,7 @@ class button(tk.Button):
             k: v for k, v in locals().items() if k != "self" and v is not None
         }
 
-    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = False, fill= None, side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = (0, 5),  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
+    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = False, fill= None, side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = 2,  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
         super().__init__(master=master, **self.kwargs)
         args = {k: v for k, v in locals().items() if k not in ["self", 'master', 'kwargs', '__class__'] and v is not None}
         self.pack(**args)
@@ -124,12 +120,6 @@ class comBox():
 
 if __name__ == "__main__":
     nome = textInput()
-    # layout = [
-    #     [label(text="Nome do Arquivo"), nome], 
-    #     [label(text="Data Início"), dateInput(days_from_today=-30), label(text="Data Fim"), dateInput()],
-    #     [label(text="Formato de Saída"), comBox(values=['.json', '.csv'])],
-    #     [label(text="Enviar:"), button(text="Enviar", command=lambda: nome.setValue("Hello World"))]
-    # ]
     
     teste = dateInput()
     number = numberInput(1, command=lambda: teste.setFromToday(-1*int(number.get())))

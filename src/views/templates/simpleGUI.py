@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkcalendar import DateEntry
 from datetime import datetime, timedelta
 
@@ -44,6 +45,10 @@ class textInput(tk.Entry):
         args = {k: v for k, v in locals().items() if k not in ["self", 'master', 'kwargs', '__class__'] and v is not None}
         self.pack(**args)
 
+    def setValue(self, text=''):
+        self.delete(0, tk.END)
+        self.insert(0, text)
+
 
 class dateInput(DateEntry):
     def __init__(self,date_pattern="dd/mm/yyyy", days_from_today:int=0, width=10, **kw):
@@ -62,12 +67,48 @@ class dateInput(DateEntry):
         self.pack(**args)
 
 
+class button(tk.Button):
+    def __init__(self, cnf = None, *, activebackground = None, activeforeground = None, anchor = "center", background = None, bd = None, bg = None, bitmap = "", border = None, borderwidth = None, command = "", compound = "none", cursor = "", default = "disabled", disabledforeground = None, fg = None, font = "TkDefaultFont", foreground = None, height = 0, highlightbackground = None, highlightcolor = None, highlightthickness = 1, image = "", justify = "center", name = None, overrelief = "", padx = None, pady = None, relief = None, repeatdelay = None, repeatinterval = None, state = "normal", takefocus = "", text = "", textvariable = None, underline = -1, width = 0, wraplength = 0):
+        self.kwargs = {  # Store all provided arguments
+            k: v for k, v in locals().items() if k != "self" and v is not None
+        }
+
+    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = False, fill= None, side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = (0, 5),  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
+        super().__init__(master=master, **self.kwargs)
+        args = {k: v for k, v in locals().items() if k not in ["self", 'master', 'kwargs', '__class__'] and v is not None}
+        self.pack(**args)
+
+class comBox():
+    def __init__(self, *, values = [], background = None, class_ = "", cursor = "", exportselection = True, font = None, foreground = None, height = 10, invalidcommand = None, justify = "left", name = None, postcommand = "", show=None, state = "normal", style = "", takefocus = None, validate = None, validatecommand = None, width = 20, xscrollcommand = None):
+        self.kwargs = {  # Store all provided arguments
+            k: v for k, v in locals().items() if k not in ["self", "values"] and v is not None
+        }
+        self.values = values
+
+    def create(self, master = None, cnf = None, *, after = None, anchor=None, before=None, expand = False, fill= None, side='left', ipadx= 0, ipady= 0, padx: int | tuple[int, int] = (0, 5),  pady: int | tuple[int, int] = 0, in_=None, **kwargs):
+        # self.text_variable = tk.StringVar()
+        self.combobox = ttk.Combobox(master=master,**self.kwargs)
+        args = {k: v for k, v in locals().items() if k not in ["self", 'master', 'kwargs', '__class__'] and v is not None}
+        self.combobox.pack(**args)
+        self.combobox['values'] = self.values
+
 if __name__ == "__main__":
+    nome = textInput()
     layout = [
-        [label(text="Nome do Arquivo"), textInput()], 
+        [label(text="Nome do Arquivo"), nome], 
         [label(text="Data Início"), dateInput(days_from_today=-30), label(text="Data Fim"), dateInput()],
-        [label(text="linha 2")]
+        [comBox(values=['.json', '.csv'])],
+        [label(text="Enviar:"), button(text="Enviar", command=lambda: nome.setValue("Hello World"))]
     ]
     main = Window(layout=layout)
+
+    teste = ttk.Combobox(main)
+    teste.pack()
+    teste['values'] = ['teste', 'teste2']
+
+    # Explicit combobox creation and packing
+    combox_instance = comBox(values=['.json', '.csv'])
+    combox_instance.create(main)
+
 
     main.mainloop()

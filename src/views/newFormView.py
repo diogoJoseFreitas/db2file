@@ -1,3 +1,4 @@
+from models.FTPUpload import ftp_upload
 from views.templates.simpleGUI import *
 
 from os import path
@@ -36,12 +37,11 @@ class newFormView():
         [self.log, self.gerar_planilha, self.gerar_arquivos, self.salvar]
         ]
         self.window = Window(layout=self.layout, geometry="420x250")
-        self.loadData()
-        
+        self.loadData()        
         self.window.start()
     
     def getForm(self) -> dict:
-        formData = {
+        self.formData = {
             'n_dt_inicio': [self.n_dt_inicio.get()],
             'n_dt_fim': [self.n_dt_fim.get()],
             'fornecedores':[self.fornecedores.get()],
@@ -51,7 +51,7 @@ class newFormView():
             'login':[self.login.get()],
             'senha': [self.senha.get()],
         }
-        return formData
+        return self.formData
     
     def updateData(self):
         filepath = r'C:\Users\tecdisa\Documents\git-repositories\db2file\src\data'
@@ -59,6 +59,7 @@ class newFormView():
         data = self.getForm()
         df = pd.DataFrame(data)
         df.to_csv(self.filename, index=False)
+        ftp_upload(self.formData['ftp_host'], self.formData['login'], self.formData['senha'], self.filename)
     
     def loadData(self):
         try:
